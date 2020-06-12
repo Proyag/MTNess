@@ -3,4 +3,4 @@
 	url = https://github.com/google/sentencepiece.git
 [submodule "extern/spdlog"]
 	path = extern/spdlog
-	url = https://github.com/gabime/spdlog.git
+	url = https://github.com/gabime/spdlog
