@@ -1,3 +1,4 @@
+#include <spdlog/spdlog.h>
 #include <map>
 #include <string>
 #include "cli_options.h"
@@ -105,7 +106,7 @@ std::shared_ptr<Options> configure_cli(CLI::App &app) {
 
   app.callback([options]() {
     if(!torch::cuda::is_available() || options->training_options.cpu) {
-      std::cerr << "GPU disabled or not found. Using CPU only" << std::endl;
+      spdlog::warn("GPU disabled or not found. Using CPU only");
       options->training_options.cpu = true;
       options->training_options.device = torch::kCPU;
     }
