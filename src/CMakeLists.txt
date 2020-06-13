@@ -25,6 +25,6 @@ set(EXECUTABLES ${EXECUTABLES} mtness_main)
 
 foreach(exec ${EXECUTABLES})
   # target_link_libraries(${exec} mtness ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
-  target_link_libraries(${exec} ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(${exec} ${EXT_LIBS} ${CMAKE_THREAD_LIBS_INIT} stdc++fs)
   set_target_properties(${exec} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 endforeach(exec)
