@@ -13,7 +13,7 @@ set(EXT_LIBS ${EXT_LIBS} sentencepiece sentencepiece_train ${TORCH_LIBRARIES} ${
 # set_target_properties(mtness PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 # set_target_properties(mtness PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
 
-set(SRC_FILES mtness.cpp cli_options.cpp dataset.cpp
+set(SRC_FILES mtness.cpp cli_options.cpp data/dataset.cpp
   models/sutskever.cpp models/att_decoder.cpp models/rnn.cpp
   models/encoder.cpp)
 

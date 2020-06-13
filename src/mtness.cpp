@@ -6,8 +6,9 @@
 #include <memory>
 #include <chrono>
 #include "cli_options.h"
-#include "dataset.h"
-#include "batch_transform.h"
+#include "data/vocab.h"
+#include "data/dataset.h"
+#include "data/batch_transform.h"
 #include "models/encdec.h"
 #include "models/rnn.h"
 

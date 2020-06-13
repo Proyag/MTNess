@@ -34,7 +34,3 @@ class TranslationDataset : public datasets::StatefulDataset<TranslationDataset, 
   std::unique_ptr<SentencePieceProcessor> src_spm_processor_;
   std::unique_ptr<SentencePieceProcessor> trg_spm_processor_;
 };
-
-std::unique_ptr<SentencePieceProcessor> load_vocab(const string &spm_path);
-void create_vocab(const string &spm_path, const string &text_file, const size_t vocab_size);
-std::unique_ptr<SentencePieceProcessor> load_or_create_vocab(const string &spm_path, const string &text_file, const size_t &vocab_size);
