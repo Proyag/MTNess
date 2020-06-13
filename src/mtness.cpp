@@ -51,6 +51,11 @@ int main(int argc, char **argv) {
                   .workers(1)
                   .enforce_ordering(true)));
 
+  // Create model directory if it doesn't exist
+  if(!std::filesystem::exists(options->training_options.model_dir)) {
+    std::filesystem::create_directory(options->training_options.model_dir);
+  }
+
   // Build model
   EncoderDecoder<BiDeepDecoder> model(options->model_options);
   model->to(options->training_options.device, /*non_blocking=*/true);
@@ -91,8 +96,26 @@ int main(int argc, char **argv) {
         last_time = curr_time;
         sentences_since_last = 0;
       }
+      if(updates % options->training_options.save_freq == 0) {
+        // Save model
+        string save_path = options->training_options.model_dir;
+        if(!options->training_options.overwrite) {
+          save_path += "/model_iter" + std::to_string(updates) + ".pt";
+        }
+        else {
+          save_path += "/model.pt";
+        }
+        spdlog::info("Saving model to {}", save_path);
+        model->eval();
+        torch::save(model, save_path);
+        model->train();
+      }
     }
   }
+
+  // Save model
+  model->eval();
+  torch::save(model, options->training_options.model_dir + "/model.pt");
 
   return 0;
 }

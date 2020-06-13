@@ -31,6 +31,8 @@ struct ModelOptions {
 struct TrainingOptions {
   vector<string> training_data;
   vector<string> spm_models;
+  string model_dir = "model";
+  bool overwrite = false;
   bool reverse_src = false;
   size_t batch_size = 32;
   size_t epochs = 1;
@@ -39,6 +41,7 @@ struct TrainingOptions {
   torch::DeviceType device = torch::kCUDA;
   double learning_rate = 1e-3;
   size_t disp_freq = 100;
+  size_t save_freq = 100;
 };
 
 struct ValidationOptions {};

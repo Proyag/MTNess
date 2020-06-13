@@ -73,6 +73,12 @@ std::shared_ptr<Options> configure_cli(CLI::App &app) {
                     "Path to SPM models. Created if non-existent")
       ->required()
       ->expected(2);
+  train->add_option("--model-dir",
+                    options->training_options.model_dir,
+                    "Path to model directory");
+  train->add_flag("--overwrite-checkpoints",
+                  options->training_options.overwrite,
+                  "Overwrite checkpoints instead of keeping them all");
   train->add_flag("--reverse-src",
                   options->training_options.reverse_src,
                   "Reverse source sentences");
@@ -101,6 +107,11 @@ std::shared_ptr<Options> configure_cli(CLI::App &app) {
   train->add_option("--disp-freq",
                     options->training_options.disp_freq,
                     "Display status after every n updates",
+                    true)
+      ->check(CLI::PositiveNumber);
+  train->add_option("--save-freq",
+                    options->training_options.save_freq,
+                    "Save model after every n updates",
                     true)
       ->check(CLI::PositiveNumber);
 
