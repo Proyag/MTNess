@@ -20,6 +20,11 @@ std::shared_ptr<Options> configure_cli(CLI::App &app) {
                  "Hidden dimension of RNN",
                  true)
       ->check(CLI::PositiveNumber);
+  app.add_option("--vocab-size",
+                 options->model_options.vocab_size,
+                 "Maximum size of vocab",
+                 true)
+      ->check(CLI::PositiveNumber);
   app.add_option("--enc-type",
                  options->model_options.enc_type,
                  "Type of encoder")
@@ -64,10 +69,9 @@ std::shared_ptr<Options> configure_cli(CLI::App &app) {
       ->check(CLI::ExistingFile);
   train->add_option("--spm-model",
                     options->training_options.spm_models,
-                    "Path to SPM models")
+                    "Path to SPM models. Created if non-existent")
       ->required()
-      ->expected(2)
-      ->check(CLI::ExistingFile);
+      ->expected(2);
   train->add_flag("--reverse-src",
                   options->training_options.reverse_src,
                   "Reverse source sentences");

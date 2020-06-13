@@ -26,9 +26,13 @@ int main(int argc, char **argv) {
   std::shared_ptr<Options> options = configure_cli(cli);
   CLI11_PARSE(cli, argc, argv);
 
-  // Load SPM models
-  auto src_spm_processor = load_vocab(options->training_options.spm_models[0]);
-  auto trg_spm_processor = load_vocab(options->training_options.spm_models[1]);
+  // Load or create SPM models
+  auto src_spm_processor = load_or_create_vocab(options->training_options.spm_models[0],
+                                                options->training_options.training_data[0],
+                                                options->model_options.vocab_size);
+  auto trg_spm_processor = load_or_create_vocab(options->training_options.spm_models[1],
+                                                options->training_options.training_data[1],
+                                                options->model_options.vocab_size);
   options->model_options.src_vocab_size = src_spm_processor->GetPieceSize();
   options->model_options.trg_vocab_size = trg_spm_processor->GetPieceSize();
 

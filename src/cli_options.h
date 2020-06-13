@@ -16,6 +16,7 @@ struct ModelOptions {
   EncoderType enc_type = EncoderType::bidirectional;
   size_t emb_dim = 512;
   size_t rnn_dim = 1024;
+  size_t vocab_size = 32000;
   size_t enc_depth = 1;
   size_t enc_cell_depth = 1;
   size_t dec_depth = 1;
