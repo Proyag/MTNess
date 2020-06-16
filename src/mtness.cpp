@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
   auto optimizer = torch::optim::Adam(model->parameters(), torch::optim::AdamOptions(options->training_options.learning_rate));
 
   size_t total_sentences = 0;
-  size_t sentences_since_last = 0;
+  size_t words_since_last = 0;
   size_t updates = 0;
   auto last_time = std::chrono::high_resolution_clock::now();
 
@@ -90,13 +90,18 @@ int main(int argc, char **argv) {
       // For display purposes
       ++updates;
       total_sentences += batch.data.data.size(-1);
-      sentences_since_last += batch.data.data.size(-1);
+      words_since_last += batch.data.lengths.sum().item<int64_t>();
       if(updates % options->training_options.disp_freq == 0) {
         auto curr_time = std::chrono::high_resolution_clock::now();
         auto time_passed = std::chrono::duration_cast<std::chrono::duration<double>>(curr_time - last_time);
-        spdlog::info("Epoch: {} ||| Updates: {} ||| Sentences: {} ||| Sentences/second: {:.2f} ||| Loss: {:.5f}", epoch, updates, total_sentences, sentences_since_last / time_passed.count(), loss.item<double>());
+        spdlog::info("Epoch: {} ||| Updates: {} ||| Sentences: {} ||| Words/second: {:.2f} ||| Loss: {:.5f}",
+                     epoch,
+                     updates,
+                     total_sentences,
+                     words_since_last / time_passed.count(),
+                     loss.item<double>());
         last_time = curr_time;
-        sentences_since_last = 0;
+        words_since_last = 0;
       }
       if(updates % options->training_options.save_freq == 0) {
         // Save model
