@@ -92,6 +92,15 @@ std::shared_ptr<Options> configure_cli(CLI::App &app) {
                     "Training minibatch size",
                     true)
       ->check(CLI::PositiveNumber);
+  train->add_option("--maxibatch-size",
+                    options->training_options.maxibatch_size,
+                    "Number of batches to load and sort",
+                    true)
+      ->check(CLI::PositiveNumber);
+  train->add_option("--maxi-batch-sort",
+                    options->training_options.maxi_sort,
+                    "Sort maxi-batches by length")
+      ->transform(CLI::CheckedTransformer(maxi_sort_map, CLI::ignore_case));
   train->add_option("--learning-rate,--lr",
                     options->training_options.learning_rate,
                     "Initial learning rate for Adam",

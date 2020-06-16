@@ -40,3 +40,14 @@ static std::unordered_map<std::string, EncoderType> encoder_type_map{
     {"bidirectional", EncoderType::bidirectional},
     {"alternating", EncoderType::alternating},
     {"bi-unidirectional", EncoderType::bi_unidirectional}};
+
+enum class MaxiBatchSortKey {
+  source,
+  target,
+  none
+};
+
+static std::unordered_map<std::string, MaxiBatchSortKey> maxi_sort_map{
+    {"source", MaxiBatchSortKey::source},
+    {"target", MaxiBatchSortKey::target},
+    {"none", MaxiBatchSortKey::none}};

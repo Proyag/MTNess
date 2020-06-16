@@ -35,6 +35,8 @@ struct TrainingOptions {
   bool overwrite = false;
   bool reverse_src = false;
   size_t batch_size = 32;
+  size_t maxibatch_size = 100;
+  MaxiBatchSortKey maxi_sort = MaxiBatchSortKey::target;
   size_t epochs = 1;
   size_t max_length = 100;
   bool cpu = false;

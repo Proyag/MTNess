@@ -42,13 +42,15 @@ int main(int argc, char **argv) {
                      options->training_options.training_data[0],
                      options->training_options.training_data[1],
                      std::move(src_spm_processor),
-                     std::move(trg_spm_processor))
+                     std::move(trg_spm_processor),
+                     options->training_options.maxibatch_size,
+                     options->training_options.maxi_sort)
                      .map(PadAndStack<>());
   auto dataloader = torch::data::make_data_loader(
       std::move(dataset),
       std::move(DataLoaderOptions()
                   .batch_size(options->training_options.batch_size)
-                  .workers(1)
+                  .workers(1) // Make dataset thread-safe before changing this
                   .enforce_ordering(true)));
 
   // Create model directory if it doesn't exist
